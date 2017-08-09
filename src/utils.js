@@ -21,8 +21,14 @@ export function toLocalPath(modulePath) {
     .replace(/^(?!\.)/, './'); // insert `./` to make it a local path
 }
 
-export function replaceExtension(modulePath, ext) {
-  const filename = path.basename(modulePath, path.extname(modulePath)) + ext;
+export function replaceExtension(modulePath, ext, opts) {
+  let filename = path.basename(modulePath, path.extname(modulePath)) + ext;
+  if (opts.stripExtensions.length) {
+    filename = opts.stripExtensions.reduce(
+      (name, extension) => name.replace(extension, ''),
+      path.basename(modulePath),
+    );
+  }
   return path.join(path.dirname(modulePath), filename);
 }
 

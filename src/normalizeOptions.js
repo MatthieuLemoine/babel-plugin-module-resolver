@@ -120,6 +120,7 @@ export default createSelector(
     const transformFunctions = normalizeTransformedFunctions(opts.transformFunctions);
     const extensions = opts.extensions || defaultExtensions;
     const resolvePath = opts.resolvePath || defaultResolvePath;
+    const stripExtensions = opts.stripExtensions || [];
 
     return {
       cwd,
@@ -128,6 +129,7 @@ export default createSelector(
       transformFunctions,
       extensions,
       resolvePath,
+      stripExtensions,
     };
   },
 );
