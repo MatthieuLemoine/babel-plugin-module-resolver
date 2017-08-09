@@ -55,6 +55,7 @@ Are you a plugin author (e.g. IDE integration)? We have [documented the exposed 
     - The custom value `packagejson` will make the plugin look for the closest `package.json` based on the file to parse.
 - `transformFunctions`: Array of functions and methods that will have their first argument transformed. By default those methods are: `require`, `require.resolve`, `System.import`, `jest.genMockFromModule`, `jest.mock`, `jest.unmock`, `jest.doMock`, `jest.dontMock`.
 - `resolvePath(sourcePath, currentFile, opts)`: A function that is called for each path in the file. By default module-resolver is using an internal function, exposed like so: `import { resolvePath } from 'babel-plugin-module-resolver`'. The `opts` argument is the options object that is passed through the Babel config.
+- `stripExtensions`: An array of extensions to strip. Usefull when using the React Native Packager for example. Default [].
 
 ### Regular expression alias
 
@@ -81,6 +82,25 @@ To use the backslash character (`\`) just escape it like so: `'\\\\'` (double es
 ## ESLint plugin
 
 If you're using ESLint, you should use [eslint-plugin-import][eslint-plugin-import], and [eslint-import-resolver-babel-module][eslint-import-resolver-babel-module] to remove falsy unresolved modules.
+
+## Usage with React Native
+
+To let the packager resolve the right module for each platform, you have to add the ```.ios.js```and ```.android.js``` extensions and tell the plugin to strip these.
+
+```json
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "extensions": [".js", ".ios.js", ".android.js"],
+        "stripExtensions": [".ios.js", ".android.js"]
+      }
+    ]
+  ]
+}
+```
 
 ## Usage with Flow
 
